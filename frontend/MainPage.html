@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./MainPage.css" />
+    <link rel="shortcut icon" href="./img/siteicon.webp" type="image/x-icon">
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Book Your Trip</title>
+  </head>
+  <body>
+    <div class="mainPage">
+      <header>
+        <nav>
+          <span>TRAVEL</span>
+          <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <ul>
+            <a href="#"> <li>Home</li> </a>
+            <a href="#"><li>Destination</li></a>
+            <a href="#"><li>Travel</li></a>
+            <a href="#"><li>View</li></a>
+            <a href="#"><li>Book</li></a>
+          </ul>
+          <div class="iconsDiv">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-user" id="userIcon"></i>
+          </div>
+          
+          <div class="loginDropdown" id="loginDropdown">
+            <a href="Login.html">Login</a>
+            <a href="Register.html">Sign Up</a>
+          </div>
+          
+        </nav>
+      </header>
+      <section class="inputSection">
+        <p>See the World Your Way</p>
+        <p>Explore Cities, Nature, and Everything </p>
+        <div class="inputDiv">
+          <input type="text" placeholder="Search Your Trip Here" />
+          <div class="inputIcon">
+            <button><i class="fa-solid fa-magnifying-glass" id="srch"></i></button></a> 
+          </div>
+        </div>
+      </section>
+    </div>
+    <section class="resorts">
+      <div class="resortsTitles">
+        <h1>Explore the World</h1>
+        <p>Unforgettable Journeys Across Every Continent</p>
+      </div>
+    
+      <div class="imagesDiv">
+        <div class="mainImage resort-card">
+          <img src="https://images.pexels.com/photos/3559972/pexels-photo-3559972.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Tropical Paradise" />
+          <div class="card-content">
+            <h3>Batumi</h3>
+            <p>Experience the ultimate beach getaway in this pristine tropical paradise. </p>
+            <div class="card-details">
+              <span class="price">From $299/night</span>
+              <button class="book-now">Book Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="fourImagesDIv">
+          <div class="topDIv">
+            <div class="resort-card">
+              <img src="https://images.pexels.com/photos/2253821/pexels-photo-2253821.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Mountain Retreat" />
+              <div class="card-content">
+                <h3>Mountain Retreat</h3>
+                <p>Escape to the serenity of the mountains. Perfect for hiking, skiing, and experiencing nature at its finest.</p>
+                <div class="card-details">
+                  <span class="price">From $199/night</span>
+                  <button class="book-now">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="resort-card">
+              <img src="https://images.pexels.com/photos/2339009/pexels-photo-2339009.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Desert Oasis" />
+              <div class="card-content">
+                <h3>Desert Oasis</h3>
+                <p>Discover the magic of the desert. Luxury camping, stargazing, and unforgettable sunsets.</p>
+                <div class="card-details">
+                  <span class="price">From $249/night</span>
+                  <button class="book-now">Book Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bottomDiv">
+            <div class="resort-card">
+              <img src="https://images.pexels.com/photos/1731660/pexels-photo-1731660.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Island Resort" />
+              <div class="card-content">
+                <h3>Island Resort</h3>
+                <p>Your private island getaway. Exclusive beaches, water sports, and world-class dining.</p>
+                <div class="card-details">
+                  <span class="price">From $399/night</span>
+                  <button class="book-now">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="resort-card">
+              <img src="https://images.pexels.com/photos/3648269/pexels-photo-3648269.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Coastal Villa" />
+              <div class="card-content">
+                <h3>Coastal Villa</h3>
+                <p>Luxurious coastal living with breathtaking ocean views. Perfect for romantic getaways.</p>
+                <div class="card-details">
+                  <span class="price">From $349/night</span>
+                  <button class="book-now">Book Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <div class="game-section">
+      <h2>Discover Your Next Adventure</h2>
+      <p>Click the button to reveal a random dream destination!</p>
+      <button id="generateCard" class="generate-btn">Generate Destination</button>
+      <div id="cardContainer" class="card-container">
+     
+      </div>
+    </div>
+    <section class="lastSection">
+      <div id="photoDiv">
+        <div class="insideDiv">
+          <button id="prevBtn"><i class="fa-solid fa-arrow-left"></i></button>
+          <button id="nextBtn"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </section>
+    
+    <footer class="footer">
+      <div>
+        <h1>Travel<span>.</span></h1>
+        <div class="social">
+          <i class="fa-brands fa-facebook"></i>
+          <i class="fa-brands fa-twitter"></i>
+          <i class="fa-brands fa-youtube"></i>
+          <i class="fa-brands fa-pinterest"></i>
+          <i class="fa-brands fa-instagram"></i>
+        </div>
+      </div>
+    
+      <div class="footer-links">
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Partnerships</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Newsroom</a></li>
+          <li><a href="#">Advertising</a></li>
+        </ul>
+       
+      </div>
+    
+      <div class="footer-bottom">
+        2025 Beaches. All rights reserved.
+      </div>
+    </footer>
+    
+    
+    <script type="module" src="./MainPage.js"></script>
+
+  </body>
+</html>
