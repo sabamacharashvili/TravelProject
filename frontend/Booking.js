@@ -1,3 +1,4 @@
+import config from './config.js';
 
 let bookingForm;
 let bookingsList;
@@ -41,7 +42,7 @@ async function handleBookingSubmit(e) {
     };
 
     try {
-        const response = await fetch('http://localhost:3001/booking', {
+        const response = await fetch(`${config.API_URL}/booking`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -69,7 +70,7 @@ async function loadBookings() {
     
     async function tryLoadBookings() {
         try {
-            const response = await fetch('http://localhost:3001/booking');
+            const response = await fetch(`${config.API_URL}/booking`);
             
             if (!response.ok) {
                 throw new Error('Failed to load bookings');
