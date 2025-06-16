@@ -56,7 +56,7 @@ async function createTour(tourData) {
       creator: currentUser._id,
       fullName: currentUser.name,
       email: currentUser.email,
-      phone: '555123123', // Use actual phone if you add it to user model
+      phone: '555123123', 
     };
 
     const res = await fetch(TOUR_URL, {
@@ -125,8 +125,7 @@ function createTourCard(tour, isMyTour = false) {
     'https://images.unsplash.com/photo-1488085061387-422e29b40080'
   ];
   
-  // Select a random image from the array
-  const randomImage = travelImages[Math.floor(Math.random() * travelImages.length)];
+
 
   card.innerHTML = `
     <div class="tour-image">
@@ -166,14 +165,13 @@ async function loadTours() {
   myToursList.innerHTML = '';
   otherToursList.innerHTML = '';
 
-  // Get all tours where user is either creator or participant
   const myTours = tours.filter(t => 
     t.creator?._id === currentUser._id || 
     t.creator === currentUser._id ||
     (Array.isArray(t.user) && t.user.some(u => u._id === currentUser._id))
   );
   
-  // Get tours where user is neither creator nor participant
+
   const otherTours = tours.filter(t => 
     t.creator?._id !== currentUser._id && 
     t.creator !== currentUser._id &&
@@ -193,7 +191,7 @@ async function loadTours() {
   }
 }
 
-// Handle tab switching
+
 tabButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     tabButtons.forEach(b => b.classList.remove('active'));
@@ -221,6 +219,8 @@ createTourForm.addEventListener('submit', async (e) => {
 
 // Start app
 loadTours();
+
+//Logout functionality
 const logoutBtn = document.getElementById('logoutBtn');
 if (logoutBtn) {
   logoutBtn.addEventListener('click', () => {
@@ -228,3 +228,5 @@ if (logoutBtn) {
     window.location.href = '../Login/Login.html';
   });
 }
+
+

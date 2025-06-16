@@ -14,14 +14,14 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
-// Test Server endpoint
+// Test Server
 app.get("/test", (req, res) => {
   res.json({ message: "Server is running!" });
 });
 
 // Routes
 app.use("/user", userRouter);
-app.use("/tour", tourRouter); // Tour related routes (Add this if you're using tours)
+app.use("/tour", tourRouter); 
 
 
 app.use((err, req, res, next) => {

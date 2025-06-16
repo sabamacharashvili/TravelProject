@@ -50,8 +50,8 @@ export const getTours = async (req, res) => {
 
     const tours = await Tours.find()
       .sort({ date: 1 })
-      .populate('creator', 'name email')  // Populate creator details
-      .populate('user', 'name email');    // Populate joined users' details
+      .populate('creator', 'name email')  
+      .populate('user', 'name email');   
 
     console.log("Found tours:", tours);
 

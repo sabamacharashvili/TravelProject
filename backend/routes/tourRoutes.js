@@ -5,7 +5,7 @@ import {
   getTour,
   bookTour,
   deleteTour,
-} from "../controllers/tourController.js"; // Adjusted the import for the correct controller
+} from "../controllers/tourController.js";
 import { authenticateToken } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -20,7 +20,7 @@ router.get("/", getTours);
 router.get("/:id", getTour);
 
 // book a tour (adding a user to a tour)
-router.post("/:id/book", authenticateToken, bookTour); // Changed route to handle booking action
+router.post("/:id/book", authenticateToken, bookTour); 
 
 // delete a tour by ID
 router.delete("/:id", authenticateToken, deleteTour);
