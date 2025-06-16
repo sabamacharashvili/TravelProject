@@ -2,8 +2,10 @@ import express from "express";
 import {
   login,
   register,
-  addTourToUser,
+  getProfile, // ✅ ADD THIS
+  // addTourToUser, (optional if unused)
 } from "../controllers/userController.js";
+import { authenticateToken } from "../middleware/auth.js"; // ✅ Required to protect route
 
 const router = express.Router();
 
@@ -13,7 +15,10 @@ router.post("/register", register);
 // user login
 router.post("/login", login);
 
-// add a tour to a user (either created or joined)
-router.post("/add-tour", addTourToUser);
+// user profile route
+router.get("/profile", authenticateToken, getProfile);
+
+// add a tour to a user (if you still want this)
+// router.post("/add-tour", addTourToUser);
 
 export default router;

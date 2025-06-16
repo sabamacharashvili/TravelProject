@@ -7,6 +7,7 @@
 
 body {
   background-color: #f5f5f5;
+  min-height: 100vh;
   color: #333;
   line-height: 1.6;
 }
@@ -15,31 +16,77 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  position: relative;
 }
 
-.booking-section {
+/* Logout Button */
+#logoutBtn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background-color: #dc3545;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#logoutBtn:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Profile Section */
+.profile-section {
   background: white;
+  border-radius: 15px;
   padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
-h1 {
-  color: #2c3e50;
+.profile-section:hover {
+  transform: translateY(-2px);
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-header h3 {
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.profile-header p {
+  color: #666;
+}
+
+/* Create Tour Section */
+.create-tour-section {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
   margin-bottom: 2rem;
-  text-align: center;
-  font-size: 2.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
-h2 {
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
+.create-tour-section:hover {
+  transform: translateY(-2px);
 }
 
-.booking-form {
-  display: grid;
+.tour-form {
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
@@ -57,22 +104,23 @@ h2 {
 
 label {
   font-weight: 500;
-  color: #2c3e50;
+  color: #333;
 }
 
 input,
 textarea {
   padding: 0.8rem;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 input:focus,
 textarea:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
 }
 
 textarea {
@@ -81,68 +129,250 @@ textarea {
 }
 
 .submit-btn {
-  background-color: #3498db;
+  background-color: #4CAF50;
   color: white;
   padding: 1rem;
   border: none;
-  border-radius: 5px;
-  font-size: 1.1rem;
-  font-weight: 500;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .submit-btn:hover {
-  background-color: #2980b9;
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.bookings-section {
+/* Tours Section */
+.tours-section {
   background: white;
+  border-radius: 15px;
   padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
-.bookings-list {
-  display: grid;
+.tours-section:hover {
+  transform: translateY(-2px);
+}
+
+.tours-tabs {
+  display: flex;
   gap: 1rem;
+  margin-bottom: 2rem;
 }
 
-/* Responsive  */
+.tab-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  background: #f0f0f0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.tab-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.tours-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.tour-card {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.tour-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tour-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.tour-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.tour-card:hover .tour-image img {
+  transform: scale(1.05);
+}
+
+.tour-content {
+  padding: 1.5rem;
+}
+
+.tour-content h3 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.tour-content p {
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.tour-content ul {
+  list-style: none;
+  padding-left: 1rem;
+  margin: 0.5rem 0;
+}
+
+.tour-content ul li {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.tour-meta {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.join-btn {
+  background-color: #2196F3;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.join-btn:hover:not(:disabled) {
+  background-color: #1976D2;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.join-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Enhanced Responsive Design */
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
   }
 
-  .booking-section,
-  .bookings-section {
-    padding: 1.5rem;
+  #logoutBtn {
+    position: static;
+    margin-bottom: 1rem;
+    width: 100%;
   }
 
   .form-row {
     grid-template-columns: 1fr;
   }
 
-  h1 {
-    font-size: 2rem;
+  .tours-list {
+    grid-template-columns: 1fr;
   }
 
-  h2 {
-    font-size: 1.5rem;
+  .tours-tabs {
+    flex-direction: column;
+  }
+
+  .tab-btn {
+    width: 100%;
+  }
+
+  .profile-section,
+  .create-tour-section,
+  .tours-section {
+    padding: 1.5rem;
+  }
+
+  .tour-image {
+    height: 180px;
+  }
+
+  .tour-content {
+    padding: 1rem;
+  }
+
+  .tour-content h3 {
+    font-size: 1.1rem;
+  }
+
+  .tour-content p,
+  .tour-content ul li {
+    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
   .container {
-    padding: 0.5rem;
+    padding: 0.8rem;
   }
 
-  .booking-section,
-  .bookings-section {
-    padding: 1rem;
+  h2 {
+    font-size: 1.5rem;
   }
 
-  h1 {
-    font-size: 1.8rem;
+  .profile-header h3 {
+    font-size: 1.2rem;
+  }
+
+  input,
+  textarea,
+  .submit-btn,
+  .tab-btn {
+    font-size: 0.9rem;
+  }
+
+  .tour-image {
+    height: 160px;
+  }
+
+  .tour-content {
+    padding: 0.8rem;
+  }
+
+  .tour-content h3 {
+    font-size: 1rem;
+  }
+
+  .tour-content p,
+  .tour-content ul li {
+    font-size: 0.85rem;
   }
 }

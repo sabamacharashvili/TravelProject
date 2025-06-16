@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Book a Trip</title>
+    <title>Travel Dashboard</title>
     <link rel="stylesheet" href="Booking.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
@@ -12,61 +12,35 @@
   </head>
   <body>
     <div class="container">
-      <div class="booking-section">
-        <h1>Book Your Trip</h1>
-        <form id="bookingForm" class="booking-form">
+      <!-- User Profile Section -->
+      <button id="logoutBtn">Logout</button>
+      <div class="profile-section">
+        <h2>User Profile</h2>
+        <div id="userProfile" class="profile-info">
+          <div class="profile-header">
+            <h3 id="userName">Loading...</h3>
+            <p id="userEmail">Loading...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create Tour Section -->
+      <div class="create-tour-section">
+        <h2>Create New Tour</h2>
+        <form id="createTourForm" class="tour-form">
           <div class="form-group">
-            <label for="fullName">Full Name</label>
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              required
-              placeholder="Enter your full name"
-            />
+            <label for="tourName">Tour Name</label>
+            <input type="text" id="tourName" name="tourName" required placeholder="Enter tour name" />
           </div>
 
           <div class="form-group">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              placeholder="Enter your email"
-            />
+            <label for="destination">Destination</label>
+            <input type="text" id="destination" name="destination" required placeholder="Where are you going?" />
           </div>
 
           <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              required
-              placeholder="Enter your phone number"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="destination">Trip Destination</label>
-            <input
-              type="text"
-              id="destination"
-              name="destination"
-              required
-              placeholder="Where do you want to go?"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="directions">Directions</label>
-            <textarea
-              id="directions"
-              name="directions"
-              required
-              placeholder="Enter specific directions or meeting point"
-            ></textarea>
+            <label for="description">Directions</label>
+            <textarea id="description" name="description" required placeholder="Enter meeting point and directions"></textarea>
           </div>
 
           <div class="form-row">
@@ -81,13 +55,26 @@
             </div>
           </div>
 
-          <button type="submit" class="submit-btn">Book Trip</button>
+          <button type="submit" class="submit-btn">Create Tour</button>
         </form>
       </div>
 
-      <div class="bookings-section">
-        <h2>Your Bookings</h2>
-        <div id="bookingsList" class="bookings-list"></div>
+      <!-- Tours Section -->
+      <div class="tours-section">
+        <div class="tours-tabs">
+          <button class="tab-btn active" data-tab="myTours">My Tours</button>
+          <button class="tab-btn" data-tab="otherTours">Other Tours</button>
+        </div>
+
+        <div id="myTours" class="tab-content active">
+          <h2>My Created Tours</h2>
+          <div id="myToursList" class="tours-list"></div>
+        </div>
+
+        <div id="otherTours" class="tab-content">
+          <h2>Available Tours</h2>
+          <div id="otherToursList" class="tours-list"></div>
+        </div>
       </div>
     </div>
 

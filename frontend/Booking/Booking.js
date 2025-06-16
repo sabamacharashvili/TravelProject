@@ -1,140 +1,230 @@
-let bookingForm;
-let bookingsList;
+const token = localStorage.getItem('token');
+if (!token) {
+  window.location.href = '../Login/Login.html';
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-  bookingForm = document.getElementById("bookingForm");
-  bookingsList = document.getElementById("bookingsList");
+const userProfile = document.getElementById('userProfile');
+const userName = document.getElementById('userName');
+const userEmail = document.getElementById('userEmail');
+const createTourForm = document.getElementById('createTourForm');
+const myToursList = document.getElementById('myToursList');
+const otherToursList = document.getElementById('otherToursList');
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
 
-  loadBookings();
+const API_URL = 'http://localhost:3001';
+const TOUR_URL = `${API_URL}/tour`;
+const USER_URL = `${API_URL}/user`;
 
-  if (bookingForm) {
-    bookingForm.addEventListener("submit", handleBookingSubmit);
-  }
-});
+let currentUser = null;
 
-const destinationImages = {
-  default:
-    "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=400&h=300&fit=crop",
-};
-
-const API_BASE = "http://localhost:3001/tour";
-
-async function handleBookingSubmit(e) {
-  e.preventDefault();
-
-  // For demo: use email as "creator" (should be user ID if logged in)
-  const creator = document.getElementById("email").value;
-
-  const formData = {
-    fullName: document.getElementById("fullName").value,
-    email: document.getElementById("email").value,
-    phone: document.getElementById("phone").value,
-    destination: document.getElementById("destination").value,
-    directions: document.getElementById("directions").value,
-    date: document.getElementById("date").value,
-    time: document.getElementById("time").value,
-    creator: creator, // This should be a user ID in a real app
-  };
-
-  // Optional: check for empty fields
-  for (const key in formData) {
-    if (!formData[key]) {
-      alert("Please fill all fields.");
-      return;
-    }
-  }
-
+async function fetchUserProfile() {
   try {
-    const response = await fetch(API_BASE, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
+    const res = await fetch(`${USER_URL}/profile`, {
+      headers: { 'Authorization': `Bearer ${token}` }
     });
+    const data = await res.json();
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Failed to create booking");
-    }
+    if (!data.success) throw new Error('Unauthorized');
 
-    alert("Booking created successfully!");
-    e.target.reset();
-    loadBookings();
-  } catch (error) {
-    console.error("Error:", error);
-    alert("Failed to create booking. " + error.message);
+    currentUser = data.user;
+    userName.textContent = data.user.name;
+    userEmail.textContent = data.user.email;
+    return currentUser;
+  } catch (err) {
+    console.error(err);
+    alert('Session expired. Please log in again.');
+    window.location.href = '../Login/Login.html';
   }
 }
 
-async function loadBookings() {
-  let retryCount = 0;
-  const maxRetries = 3;
+async function fetchTours() {
+  try {
+    const res = await fetch(TOUR_URL);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch (err) {
+    console.error('Failed to fetch tours', err);
+    return [];
+  }
+}
 
-  async function tryLoadBookings() {
-    try {
-      const response = await fetch(API_BASE);
+async function createTour(tourData) {
+  try {
+    const payload = {
+      ...tourData,
+      creator: currentUser._id,
+      fullName: currentUser.name,
+      email: currentUser.email,
+      phone: '555123123', // Use actual phone if you add it to user model
+    };
 
-      if (!response.ok) {
-        throw new Error("Failed to load bookings");
-      }
+    const res = await fetch(TOUR_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(payload)
+    });
 
-      const bookings = await response.json();
+    const data = await res.json();
 
-      if (!bookingsList) {
-        console.error("Bookings list element not found");
-        return;
-      }
-
-      if (!bookings || bookings.length === 0) {
-        bookingsList.innerHTML = '<p class="no-bookings">No bookings found</p>';
-        return;
-      }
-
-      bookingsList.innerHTML = `
-        <div class="bookings-grid">
-          ${bookings
-            .map(
-              (booking) => `
-              <div class="booking-card">
-                <div class="booking-image">
-                  <img src="${
-                    destinationImages[booking.destination] ||
-                    destinationImages.default
-                  }" 
-                  alt="${booking.destination}" 
-                  onerror="this.src='${destinationImages.default}'">
-                </div>
-                <div class="booking-details">
-                  <h3>${booking.destination}</h3>
-                  <p><strong>Date:</strong> ${new Date(
-                    booking.date
-                  ).toLocaleDateString()}</p>
-                  <p><strong>Time:</strong> ${booking.time}</p>
-                  <p><strong>Contact:</strong> ${booking.email} | ${
-                booking.phone
-              }</p>
-                  <p><strong>Directions:</strong> ${booking.directions}</p>
-                </div>
-              </div>
-            `
-            )
-            .join("")}
-        </div>
-      `;
-    } catch (error) {
-      console.error("Error loading bookings:", error);
-      if (retryCount < maxRetries) {
-        retryCount++;
-        setTimeout(tryLoadBookings, 1000);
-      } else {
-        if (bookingsList) {
-          bookingsList.innerHTML =
-            '<p class="error">Failed to load bookings. Please refresh the page.</p>';
-        }
-      }
+    if (res.ok) {
+      alert('Tour created successfully!');
+      createTourForm.reset();
+      loadTours();
+    } else {
+      alert(data.message || 'Failed to create tour');
     }
+  } catch (err) {
+    console.error(err);
+    alert('Something went wrong.');
+  }
+}
+
+async function joinTour(tourId) {
+  try {
+    const res = await fetch(`${TOUR_URL}/${tourId}/book`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        userId: currentUser._id,
+        fullName: currentUser.name,
+        email: currentUser.email,
+        phone: '555123123'
+      })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert('Successfully joined tour!');
+      loadTours();
+    } else {
+      alert(data.message || 'Could not join tour');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Something went wrong.');
+  }
+}
+
+function createTourCard(tour, isMyTour = false) {
+  const card = document.createElement('div');
+  card.className = 'tour-card';
+
+  const participants = Array.isArray(tour.user) ? tour.user : [];
+  const alreadyJoined = participants.some(u => u._id === currentUser._id);
+  
+  // Default travel images array
+  const travelImages = [
+    'https://images.unsplash.com/photo-1488085061387-422e29b40080'
+  ];
+  
+  // Select a random image from the array
+  const randomImage = travelImages[Math.floor(Math.random() * travelImages.length)];
+
+  card.innerHTML = `
+    <div class="tour-image">
+      <img src="${randomImage}" alt="Travel destination" />
+    </div>
+    <div class="tour-content">
+      <h3>${tour.fullName || 'Unnamed Tour'}</h3>
+      <p><strong>Destination:</strong> ${tour.destination}</p>
+      <p><strong>Date:</strong> ${new Date(tour.date).toLocaleDateString()}</p>
+      <p><strong>Time:</strong> ${tour.time || 'N/A'}</p>
+      <p><strong>Directions:</strong> ${tour.directions}</p>
+      <p><strong>Participants:</strong> ${participants.length}</p>
+      ${participants.length > 0 ? `
+        <p><strong>Joined Users:</strong></p>
+        <ul>${participants.map(p => `<li>${p.fullName || p.email}</li>`).join('')}</ul>` : ''
+      }
+      <div class="tour-meta">
+        <button class="join-btn" ${alreadyJoined ? 'disabled' : ''}>
+          ${alreadyJoined ? 'Already Joined' : 'Join Tour'}
+        </button>
+      </div>
+    </div>
+  `;
+
+  const joinBtn = card.querySelector('.join-btn');
+  if (!alreadyJoined) {
+    joinBtn.addEventListener('click', () => joinTour(tour._id));
   }
 
-  tryLoadBookings();
+  return card;
+}
+
+async function loadTours() {
+  await fetchUserProfile();
+  const tours = await fetchTours();
+
+  myToursList.innerHTML = '';
+  otherToursList.innerHTML = '';
+
+  // Get all tours where user is either creator or participant
+  const myTours = tours.filter(t => 
+    t.creator?._id === currentUser._id || 
+    t.creator === currentUser._id ||
+    (Array.isArray(t.user) && t.user.some(u => u._id === currentUser._id))
+  );
+  
+  // Get tours where user is neither creator nor participant
+  const otherTours = tours.filter(t => 
+    t.creator?._id !== currentUser._id && 
+    t.creator !== currentUser._id &&
+    (!Array.isArray(t.user) || !t.user.some(u => u._id === currentUser._id))
+  );
+
+  if (myTours.length === 0) {
+    myToursList.innerHTML = '<p>You haven\'t created or joined any tours yet.</p>';
+  } else {
+    myTours.forEach(t => myToursList.appendChild(createTourCard(t, true)));
+  }
+
+  if (otherTours.length === 0) {
+    otherToursList.innerHTML = '<p>No other tours available.</p>';
+  } else {
+    otherTours.forEach(t => otherToursList.appendChild(createTourCard(t, false)));
+  }
+}
+
+// Handle tab switching
+tabButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabButtons.forEach(b => b.classList.remove('active'));
+    tabContents.forEach(c => c.classList.remove('active'));
+
+    btn.classList.add('active');
+    const tabId = btn.getAttribute('data-tab');
+    document.getElementById(tabId).classList.add('active');
+  });
+});
+
+// Form submission
+createTourForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const formData = new FormData(createTourForm);
+  const tourData = {
+    fullName: formData.get('tourName'),
+    destination: formData.get('destination'),
+    directions: formData.get('description'),
+    date: formData.get('date'),
+    time: formData.get('time') || '12:00'
+  };
+  await createTour(tourData);
+});
+
+// Start app
+loadTours();
+const logoutBtn = document.getElementById('logoutBtn');
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('token');
+    window.location.href = '../Login/Login.html';
+  });
 }

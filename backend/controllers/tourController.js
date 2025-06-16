@@ -47,8 +47,14 @@ export const createTour = async (req, res) => {
 export const getTours = async (req, res) => {
   try {
     console.log("Fetching all tours");
-    const tours = await Tours.find().sort({ date: 1 });
+
+    const tours = await Tours.find()
+      .sort({ date: 1 })
+      .populate('creator', 'name email')  // Populate creator details
+      .populate('user', 'name email');    // Populate joined users' details
+
     console.log("Found tours:", tours);
+
     res.status(200).json(tours);
   } catch (error) {
     console.error("Error fetching tours:", error);
@@ -58,6 +64,7 @@ export const getTours = async (req, res) => {
     });
   }
 };
+
 
 // Get a single tour
 export const getTour = async (req, res) => {

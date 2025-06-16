@@ -1,27 +1,28 @@
-import express from 'express';
-import { 
-  createTour, 
-  getTours, 
-  getTour, 
-  bookTour, 
-  deleteTour 
-} from '../controllers/tourController.js'; // Adjusted the import for the correct controller
+import express from "express";
+import {
+  createTour,
+  getTours,
+  getTour,
+  bookTour,
+  deleteTour,
+} from "../controllers/tourController.js"; // Adjusted the import for the correct controller
+import { authenticateToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
 // create a new tour
-router.post('/', createTour);
+router.post("/", authenticateToken, createTour);
 
 // get all tours
-router.get('/', getTours);
+router.get("/", getTours);
 
 // get a single tour by ID
-router.get('/:id', getTour);
+router.get("/:id", getTour);
 
 // book a tour (adding a user to a tour)
-router.post('/:id/book', bookTour); // Changed route to handle booking action
+router.post("/:id/book", authenticateToken, bookTour); // Changed route to handle booking action
 
 // delete a tour by ID
-router.delete('/:id', deleteTour);
+router.delete("/:id", authenticateToken, deleteTour);
 
 export default router;

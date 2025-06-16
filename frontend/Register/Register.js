@@ -34,7 +34,14 @@ form.addEventListener("submit", async (e) => {
     });
 
     const result = await res.json();
-    alert(result.message);
+    
+    if (res.ok) {
+      alert(result.message);
+      // Redirect to login page after successful registration
+      window.location.href = "../Login/Login.html";
+    } else {
+      alert(result.message || "Registration failed");
+    }
   } catch (err) {
     console.error("error:", err);
     alert("An error occurred");
