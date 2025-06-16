@@ -4,7 +4,7 @@ import {
   register,
   getProfile, 
 } from "../controllers/userController.js";
-import { authenticateToken } from "../middleware/auth.js"; te
+import { authenticateToken } from "../middleware/auth.js"; 
 
 const router = express.Router();
 
