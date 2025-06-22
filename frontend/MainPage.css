@@ -168,7 +168,6 @@ button:hover {
   color: black;
 }
 
-
 /* Resort's Section */
 
 .resorts {
@@ -280,7 +279,6 @@ button:hover {
   transform: scale(1.1);
 }
 
-
 /* Game Section */
 
 .game-section {
@@ -378,7 +376,12 @@ button:hover {
   left: 0;
   right: 0;
   padding: 20px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7), transparent);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.7),
+    transparent
+  );
   color: white;
   text-align: left;
 }
@@ -397,7 +400,6 @@ button:hover {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   color: rgba(255, 255, 255, 0.95);
 }
-
 
 /* Last Section */
 
@@ -449,7 +451,6 @@ button:hover {
   background-color: rgba(0, 0, 0, 0.8);
   transform: scale(1.1);
 }
-
 
 /* Footer */
 
@@ -524,32 +525,26 @@ button:hover {
   border-top: 1px solid #ddd;
 }
 
-
-
-
 /* Responsive  for resort cards */
 
 @media screen and (max-width: 768px) {
   .fourImagesDIv {
     max-width: 100%;
   }
-  
+
   .topDIv,
   .bottomDiv {
     flex-direction: column;
   }
-  
+
   .resort-card {
     width: 100%;
   }
-  
+
   .resort-card img {
     height: 200px;
   }
 }
-
-
-
 
 @media screen and (max-width: 1024px) {
   .imagesDiv {
@@ -560,7 +555,6 @@ button:hover {
     width: 90%;
   }
 }
-
 
 @media screen and (max-width: 768px) {
   .burger {
@@ -624,7 +618,8 @@ button:hover {
     text-align: center;
   }
 
-  .mainImage, .fourImagesDIv {
+  .mainImage,
+  .fourImagesDIv {
     flex: 100%;
     max-width: 100%;
   }
@@ -638,7 +633,6 @@ button:hover {
     text-align: center;
     gap: 10px;
   }
-
 
   /* Burger Animation */
 
@@ -676,11 +670,13 @@ button:hover {
     font-size: 14px;
   }
 
-  .topDiv, .bottomDiv {
+  .topDiv,
+  .bottomDiv {
     flex-direction: column;
   }
 
-  .topDiv img, .bottomDiv img {
+  .topDiv img,
+  .bottomDiv img {
     width: 100%;
   }
 
@@ -697,13 +693,12 @@ button:hover {
   .fourImagesDIv {
     height: auto;
   }
-  
+
   .topDIv,
   .bottomDiv {
     height: 200px;
   }
 }
-
 
 /* Animations */
 
@@ -717,7 +712,6 @@ button:hover {
     transform: translateY(0);
   }
 }
-
 
 /* Responsive  for game section */
 

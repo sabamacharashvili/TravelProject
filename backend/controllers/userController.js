@@ -52,42 +52,50 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validation check
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Fill all fields" });
+      return res.status(400).json({
+        success: false,
+        message: "Fill all fields",
+      });
     }
 
-    // Find the user by email
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Email is incorrect" });
+      return res.status(400).json({
+        success: false,
+        message: "Email is incorrect",
+      });
     }
 
-    // Check if the password is correct
-    const isPasswordValid = bcrypt.compare(password, existingUser.password); // Await bcrypt comparison
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+    console.log(isPasswordValid);
     if (!isPasswordValid) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Password is incorrect" });
+      return res.status(400).json({
+        success: false,
+        message: "Password is incorrect",
+      });
     }
 
-    // Generate a JWT token
     const token = jwt.sign(
       { userId: existingUser._id, email: existingUser.email },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
 
-    res
-      .status(200)
-      .json({ success: true, message: "Successfully authorized", token });
+    return res.status(200).json({
+      success: true,
+      message: "Successfully authorized",
+      token,
+    });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ success: false, message: "Server error" });
+    console.error("Login error:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
   }
 };
 

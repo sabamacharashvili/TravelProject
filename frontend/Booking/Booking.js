@@ -207,14 +207,21 @@ async function loadTours() {
   await fetchUserProfile();
   const tours = await fetchTours();
 
-  myToursList.innerHTML = "";
+  const myCreatedToursList = document.getElementById("myCreatedToursList");
+  const myJoinedToursList = document.getElementById("myJoinedToursList");
+  const otherToursList = document.getElementById("otherToursList");
+
+  myCreatedToursList.innerHTML = "";
+  myJoinedToursList.innerHTML = "";
   otherToursList.innerHTML = "";
 
-  const myTours = tours.filter(
+  const myCreatedTours = tours.filter(
+    (t) => t.creator?._id === currentUser._id || t.creator === currentUser._id
+  );
+
+  const myJoinedTours = tours.filter(
     (t) =>
-      t.creator?._id === currentUser._id ||
-      t.creator === currentUser._id ||
-      (Array.isArray(t.user) && t.user.some((u) => u._id === currentUser._id))
+      Array.isArray(t.user) && t.user.some((u) => u._id === currentUser._id)
   );
 
   const otherTours = tours.filter(
@@ -224,13 +231,25 @@ async function loadTours() {
       (!Array.isArray(t.user) || !t.user.some((u) => u._id === currentUser._id))
   );
 
-  if (myTours.length === 0) {
-    myToursList.innerHTML =
-      "<p>You haven't created or joined any tours yet.</p>";
+  // Show my created tours
+  if (myCreatedTours.length === 0) {
+    myCreatedToursList.innerHTML = "<p>You haven’t created any tours yet.</p>";
   } else {
-    myTours.forEach((t) => myToursList.appendChild(createTourCard(t, true)));
+    myCreatedTours.forEach((t) =>
+      myCreatedToursList.appendChild(createTourCard(t, true))
+    );
   }
 
+  // Show joined tours
+  if (myJoinedTours.length === 0) {
+    myJoinedToursList.innerHTML = "<p>You haven’t joined any tours yet.</p>";
+  } else {
+    myJoinedTours.forEach((t) =>
+      myJoinedToursList.appendChild(createTourCard(t, false))
+    );
+  }
+
+  // Show other tours
   if (otherTours.length === 0) {
     otherToursList.innerHTML = "<p>No other tours available.</p>";
   } else {
@@ -274,5 +293,12 @@ if (logoutBtn) {
   logoutBtn.addEventListener("click", () => {
     localStorage.removeItem("token");
     window.location.href = "../Login/Login.html";
+  });
+}
+
+const homeBtn = document.getElementById("homeBtn");
+if (homeBtn) {
+  homeBtn.addEventListener("click", () => {
+    window.location.href = "../index.html"; // საჭიროებისამებრ შეცვალე გზა
   });
 }

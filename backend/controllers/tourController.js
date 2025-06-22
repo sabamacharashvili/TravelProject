@@ -1,5 +1,5 @@
 import Tours from "../models/tours.js";
-import User from "../models/user.js";  
+import User from "../models/user.js";
 
 // Create a new tour
 export const createTour = async (req, res) => {
@@ -7,12 +7,12 @@ export const createTour = async (req, res) => {
     console.log("Received tour creation request:", req.body);
 
     if (!req.body || !req.body.creator) {
-      return res.status(400).json({ message: "No tour data provided or creator missing" });
+      return res
+        .status(400)
+        .json({ message: "No tour data provided or creator missing" });
     }
 
-    
-    const creator = req.body.creator; 
-
+    const creator = req.body.creator;
 
     const user = await User.findById(creator);
     if (!user) {
@@ -20,8 +20,8 @@ export const createTour = async (req, res) => {
     }
 
     const tour = new Tours({
-      ...req.body,  
-      creator: creator,  
+      ...req.body,
+      creator: creator,
     });
 
     console.log("Created tour object:", tour);
@@ -29,7 +29,6 @@ export const createTour = async (req, res) => {
     const savedTour = await tour.save();
     console.log("Saved tour:", savedTour);
 
-   
     user.toursCreated.push(savedTour._id);
     await user.save();
 
@@ -46,14 +45,10 @@ export const createTour = async (req, res) => {
 // Get all tours
 export const getTours = async (req, res) => {
   try {
-    console.log("Fetching all tours");
-
     const tours = await Tours.find()
       .sort({ date: 1 })
-      .populate('creator', 'name email')  
-      .populate('user', 'name email');   
-
-    console.log("Found tours:", tours);
+      .populate("creator", "name email")
+      .populate("user", "name email");
 
     res.status(200).json(tours);
   } catch (error) {
@@ -64,7 +59,6 @@ export const getTours = async (req, res) => {
     });
   }
 };
-
 
 // Get a single tour
 export const getTour = async (req, res) => {
@@ -85,13 +79,13 @@ export const getTour = async (req, res) => {
 // Book an existing tour (adds a user to the tour's users array)
 export const bookTour = async (req, res) => {
   try {
-    const { id } = req.params; 
-    const { userId, fullName, email, phone } = req.body;  // User booking details
+    const { id } = req.params;
+    const { userId, fullName, email, phone } = req.body; // User booking details
 
     if (!userId || !fullName || !email || !phone) {
-      return res
-        .status(400)
-        .json({ message: "Please provide userId, fullName, email, and phone number" });
+      return res.status(400).json({
+        message: "Please provide userId, fullName, email, and phone number",
+      });
     }
 
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
@@ -103,7 +97,6 @@ export const bookTour = async (req, res) => {
       return res.status(404).json({ message: "Tour not found" });
     }
 
-   
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -113,7 +106,6 @@ export const bookTour = async (req, res) => {
     existingTour.user.push(userId);
     await existingTour.save();
 
-    
     user.tour.push(existingTour._id);
     await user.save();
 

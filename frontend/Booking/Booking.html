@@ -13,7 +13,11 @@
   <body>
     <div class="container">
       <!-- User Profile Section -->
-      <button id="logoutBtn">Logout</button>
+      <div class="top-bar">
+        <button id="homeBtn" class="nav-btn">🏠 Back to Home</button>
+        <button id="logoutBtn" class="nav-btn">🚪 Logout</button>
+    </div>
+
       <div class="profile-section">
         <h2>User Profile</h2>
         <div id="userProfile" class="profile-info">
@@ -30,31 +34,26 @@
         <form id="createTourForm" class="tour-form">
           <div class="form-group">
             <label for="tourName">Tour Name</label>
-            <input type="text" id="tourName" name="tourName" required placeholder="Enter tour name" />
+            <input type="text" id="tourName" name="tourName" required />
           </div>
-
           <div class="form-group">
             <label for="destination">Destination</label>
-            <input type="text" id="destination" name="destination" required placeholder="Where are you going?" />
+            <input type="text" id="destination" name="destination" required />
           </div>
-
           <div class="form-group">
             <label for="description">Directions</label>
-            <textarea id="description" name="description" required placeholder="Enter meeting point and directions"></textarea>
+            <textarea id="description" name="description" required></textarea>
           </div>
-
           <div class="form-row">
             <div class="form-group">
               <label for="date">Date</label>
               <input type="date" id="date" name="date" required />
             </div>
-
             <div class="form-group">
               <label for="time">Time</label>
               <input type="time" id="time" name="time" required />
             </div>
           </div>
-
           <button type="submit" class="submit-btn">Create Tour</button>
         </form>
       </div>
@@ -63,12 +62,18 @@
       <div class="tours-section">
         <div class="tours-tabs">
           <button class="tab-btn active" data-tab="myTours">My Tours</button>
+          <button class="tab-btn" data-tab="myJoinedTours">Joined Tours</button>
           <button class="tab-btn" data-tab="otherTours">Other Tours</button>
         </div>
 
         <div id="myTours" class="tab-content active">
           <h2>My Created Tours</h2>
-          <div id="myToursList" class="tours-list"></div>
+          <div id="myCreatedToursList" class="tours-list"></div>
+        </div>
+
+        <div id="myJoinedTours" class="tab-content">
+          <h2>My Joined Tours</h2>
+          <div id="myJoinedToursList" class="tours-list"></div>
         </div>
 
         <div id="otherTours" class="tab-content">

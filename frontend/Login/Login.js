@@ -1,38 +1,29 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector("#loginForm");
+const form = document.querySelector("#loginForm");
 
-  if (form) {
-    form.addEventListener("submit", handleLogin);
-  }
-});
+if (form) {
+  form.addEventListener("submit", handleLogin);
+}
 
 async function handleLogin(e) {
   e.preventDefault();
 
   const formData = new FormData(e.target);
-  const data = {
-    email: formData.get("email"),
-    password: formData.get("password"),
-  };
+  const email = formData.get("email");
+  const password = formData.get("password");
 
-  if (!data.email || !data.password) {
+  if (!email || !password) {
     alert("Fill all fields");
     return;
   }
 
   try {
-    const testResponse = await fetch("http://localhost:3001/test");
-    if (!testResponse.ok) {
-      throw new Error("Server is not responding");
-    }
-
     const response = await fetch("http://localhost:3001/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ email, password }),
     });
 
     const result = await response.json();
@@ -40,24 +31,25 @@ async function handleLogin(e) {
     if (response.ok && result.success) {
       if (result.token) {
         localStorage.setItem("token", result.token);
-        alert("Succesfully authorised!");
-        window.location.href = "../Booking/Booking.html";
-
-        throw new Error("Token not received");
-        console.log(Error);
-        
+        alert("Successfully authorized!");
+        window.location.href = "../index.html";
+      } else {
+        alert("Token missing from response.");
       }
     } else {
-      throw new Error(result.message || "Authorization failed");
+      alert(result.message || "Authorization failed");
     }
   } catch (error) {
-    console.error("error:", error);
-    if (error.message === "Failed to fetch") {
-      alert(
-        "Unable to connect to the server. Please check if the server is running."
-      );
-    } else {
-      alert(error.message || "An error occurred");
-    }
+    console.error("Login error:", error);
+    alert(
+      error.message === "Failed to fetch"
+        ? "Unable to connect to the server. Please check if the server is running."
+        : error.message || "An error occurred"
+    );
   }
+}
+
+// ✅ უკან გადასასვლელი ღილაკის ფუნქცია
+function goHome() {
+  window.location.href = "../index.html";
 }
