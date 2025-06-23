@@ -137,10 +137,10 @@ input {
 a {
   text-decoration: none;
 }
-a :hover {
+/* a :hover {
   color: black;
   font-size: 25px;
-}
+} */
 span:hover {
   color: rgb(31, 31, 29);
 }
