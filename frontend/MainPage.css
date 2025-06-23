@@ -71,7 +71,7 @@ nav ul li {
 .loginDropdown {
   display: none;
   position: absolute;
-  top: 50px;
+  top: 70px;
   right: 20px;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -123,6 +123,7 @@ input {
   color: white;
   font-size: 30px;
   font-family: Roboto;
+  cursor: pointer;
 }
 .inputIconDiv {
   width: 70px;
@@ -163,9 +164,6 @@ button:hover {
   color: black;
   width: 16px;
   height: 16px;
-}
-.inputSection p:hover {
-  color: black;
 }
 
 /* Resort's Section */
