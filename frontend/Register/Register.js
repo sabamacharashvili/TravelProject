@@ -27,7 +27,7 @@ form.addEventListener("submit", async (e) => {
   }
 
   try {
-    const res = await fetch("http://localhost:3001/user/register", {
+    const res = await fetch("https://travelproject-6pb9.onrender.com/user/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

@@ -12,7 +12,7 @@ const otherToursList = document.getElementById("otherToursList");
 const tabButtons = document.querySelectorAll(".tab-btn");
 const tabContents = document.querySelectorAll(".tab-content");
 
-const API_URL = "http://localhost:3001";
+const API_URL = "https://travelproject-6pb9.onrender.com";
 const TOUR_URL = `${API_URL}/tour`;
 const USER_URL = `${API_URL}/user`;
 
