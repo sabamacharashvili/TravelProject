@@ -73,7 +73,7 @@
 
 ## 👤 ავტორი
 
-**საბა მაჭარაშვილი**  
+**საბა მაჭარაშვილი/Saba Macharashvil**  
 🔗 GitHub: [@sabamacharashvili](https://github.com/sabamacharashvili)
 
 ---
