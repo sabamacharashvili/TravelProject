@@ -134,13 +134,25 @@ input {
   background-color: blue;
   border-radius: 10px;
 }
+nav span {
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  transition: color 0.3s ease, font-size 0.3s ease;
+}
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
 a {
+  color: white;
   text-decoration: none;
 }
-/* a :hover {
+a :hover {
   color: black;
-  font-size: 25px;
-} */
+  
+}
 span:hover {
   color: rgb(31, 31, 29);
 }

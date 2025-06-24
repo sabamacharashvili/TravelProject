@@ -231,3 +231,104 @@ body {
   background-color: #e74c3c;
   color: white;
 }
+
+@media screen and (max-width: 1024px) {
+  .container {
+    padding: 0 15px;
+    max-width: 95%;
+  }
+
+  .tour-card {
+    width: calc(50% - 20px); 
+  }
+
+  .tour-image img {
+    height: 140px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .top-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-btn {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+
+  #logoutBtn {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .tour-card {
+    width: 100%; 
+  }
+
+  .tour-image img {
+    height: 180px;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  .profile-section, .create-tour-section, .tab-content {
+    padding: 15px;
+  }
+
+  .nav-btn {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .tour-content h3 {
+    font-size: 18px;
+  }
+
+  .tour-content p, .tour-content ul {
+    font-size: 13px;
+  }
+
+  .tour-meta button {
+    font-size: 13px;
+    padding: 6px 8px;
+  }
+}
+
+.nav-btn, .submit-btn, .join-btn, .delete-btn {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-btn:hover, .submit-btn:hover, .join-btn:hover, .delete-btn:hover {
+  transform: scale(1.05);
+}
+
+.tour-form input,
+.tour-form textarea {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.tours-tabs {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tab-btn {
+  flex: 1 1 45%;
+  margin-bottom: 10px;
+  text-align: center;
+}
